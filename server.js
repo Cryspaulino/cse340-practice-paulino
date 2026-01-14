@@ -1,21 +1,49 @@
-// Import express using ESM syntax
+// ESM syntax
 import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-// Create an instance of an Express application
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const name = process.env.NAME;
+
 const app = express();
 
-const name = process.env.NAME; // <-- NEW
+/**
+ * Routes
+ */
 app.get('/', (req, res) => {
-    res.send(`Hello, ${name}! How has it been?`); // <-- UPDATED
+    const title = 'Welcome Home';
+    res.render('home', { title });
 });
 
-// Define a route handler for the root URL ('/')
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
+app.get('/about', (req, res) => {
+    const title = 'About Me';
+    res.render('about', { title });
 });
 
-// Define the port number the server will listen on
-const PORT = 3000;
+app.get('/products', (req, res) => {
+    const title = 'Our Products';
+    res.render('products', { title });
+});
+
+
+
+// Create an instance of an Express application
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Set EJS as the templating engine
+app.set('view engine', 'ejs');
+
+// Tell Express where to find your templates
+app.set('views', path.join(__dirname, 'src/views'));
+
+
+const NODE_ENV = process.env.NODE_ENV || 'production';
+const PORT = process.env.PORT || 3000;
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
