@@ -1,5 +1,5 @@
 html, body {
-    background-color: lightblue;
+    background-color: rgba(173, 216, 230, 0.836);
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
@@ -26,5 +26,28 @@ body {
                 color: #0066cc;
             }
         }
+    }
+}
+
+main{
+    
+    font-size: 1.2em;
+    
+    h2{
+        text-align: center;
+        text-shadow: rgba(124, 124, 124, 0.137) 3px 4px;
+    }
+    
+    .random{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    p{
+        width: 95%;
+        justify-content: center;
+        background-color: rgba(124, 124, 124, 0.137);
+        padding: 10px;
+        border-radius: 10px;
     }
 }
