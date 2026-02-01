@@ -2,6 +2,7 @@
 const courses = {
     'CS121': {
         id: 'CS121',
+        courseId: 'CS121',
         title: 'Introduction to Programming',
         department: 'Computer Science',
         description: 'Learn programming fundamentals using JavaScript and basic web development concepts.',
@@ -14,6 +15,7 @@ const courses = {
     },
     'CS162': {
         id: 'CS162',
+        courseId: 'CS162',
         title: 'Introduction to Computer Science',
         department: 'Computer Science', 
         description: 'Object-oriented programming concepts and software development practices.',
@@ -25,6 +27,7 @@ const courses = {
     },
     'MATH113': {
         id: 'MATH113',
+        courseId: 'MATH113',
         title: 'College Algebra',
         department: 'Mathematics',
         description: 'Fundamental algebra concepts including functions, polynomials, and equations.',
@@ -37,6 +40,7 @@ const courses = {
     },
     'MATH119': {
         id: 'MATH119',
+        courseId: 'MATH119',
         title: 'Calculus I',
         department: 'Mathematics',
         description: 'Introduction to differential and integral calculus with applications.',
@@ -48,6 +52,7 @@ const courses = {
     },
     'ENG101': {
         id: 'ENG101',
+        courseId: 'ENG101',
         title: 'College Writing',
         department: 'English',
         description: 'Develop writing skills for academic and professional communication.',
@@ -59,7 +64,8 @@ const courses = {
         ]
     },
     'ENG102': {
-        id: 'ENG102', 
+        id: 'ENG102',
+        courseId: 'ENG102', 
         title: 'Composition and Literature',
         department: 'English',
         description: 'Advanced writing skills through the study of literature and critical analysis.',
@@ -71,6 +77,7 @@ const courses = {
     },
     'HIST105': {
         id: 'HIST105',
+        courseId: 'HIST105',
         title: 'World History',
         department: 'History',
         description: 'Survey of world civilizations from ancient times to the present.',
