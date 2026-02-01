@@ -91,17 +91,17 @@ body {
             border-radius: 10px;
         }
     
+        footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 8px;
+            background-color: #f1f1f1;
+            border-top: 1px solid #ccccccad;
+        }
     }
 }
 
 
-footer {
-    text-align: center;
-    margin-top: auto;
-    padding: 8px;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ccccccad;
-}
 
 .break404 {
     display: block;
