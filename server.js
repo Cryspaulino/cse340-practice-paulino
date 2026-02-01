@@ -26,6 +26,17 @@ const courses = {
             { time: '3:00 PM', room: 'MC 307', professor: 'Brother Thompson' }
         ]
     },
+    'WDD130': {
+        id: 'WDD130',
+        title: 'Web Fundamentals',
+        description: 'Introduction to web development concepts and technologies.',
+        credits: 3,
+        sections: [
+            { time: '8:00 AM', room: 'MC 301', professor: 'Sister Anderson' },
+            { time: '1:00 PM', room: 'MC 305', professor: 'Brother Birch' },
+            { time: '3:00 PM', room: 'MC 307', professor: 'Brother Thompson' }
+        ]
+    },
     'ENG101': {
         id: 'ENG101',
         title: 'Academic Writing',
@@ -49,6 +60,76 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
+
+// Make NODE_ENV available to all templates
+app.use((req, res, next) => {
+    res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
+
+    next();
+});
+
+app.use((req, res, next) => {
+    const themes = ['blue-theme', 'green-theme', 'red-theme', 'grey-theme'];
+
+    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+    res.locals.bodyClass = randomTheme;
+
+    next();
+});
+
+// Add global data to all templates
+app.use((req, res, next) => {
+    res.locals.currentYear = new Date().getFullYear();
+
+    next();
+});
+
+// Time-based greeting
+app.use((req, res, next) => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+        res.locals.greeting = 'Good morning little stars';
+    } else if (currentHour < 17) {
+        res.locals.greeting = 'Good afternoon! It feels like lunch time to me';
+    } else {
+        res.locals.greeting = 'Good evening, we probably should be sleeping now';
+    }
+
+    next();
+});
+
+// Share query parameters with templates
+app.use((req, res, next) => {
+    res.locals.queryParams = req.query || {};
+
+    next();
+});
+
+// Set custom headers
+const addDemoHeaders = (req, res, next) => {
+    res.setHeader('X-Demo-Page', 'true');
+    res.setHeader('X-Middleware-Demo', 'This is a realief message - demo header is working!');
+    next();
+};
+
+// Demo page route
+app.get('/demo', addDemoHeaders, (req, res) => {
+    res.render('demo', {
+        title: 'Middleware Demo Page'
+    });
+});
+
+
+app.use((req, res, next) => {
+    // Skip logging for routes that start with /. (like /.well-known/)
+    if (!req.path.startsWith('/.')) {
+        // console.log(`${req.method} ${req.url}`);
+    }
+    next();
+});
+
+
 /* Routes */
 app.get('/', (req, res) => {
     const title = 'Welcome Home';
@@ -60,17 +141,13 @@ app.get('/about', (req, res) => {
     res.render('about', { title });
 });
 
-app.get('/products', (req, res) => {
-    const title = 'Our Products';
-    res.render('products', { title });
-});
-
 app.get('/catalog', (req, res) => {
     res.render('catalog', {
         title: 'Course Catalog', courses: courses
     });
 });
 
+// Find courses
 app.get('/catalog/:courseId', (req, res, next) => {
     const courseId = req.params.courseId;
     const course = courses[courseId];
@@ -117,43 +194,13 @@ app.get('/test-error', (req, res, next) => {
     next(err);
 });
 
+
 // Catch-all route for 404 errors
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;
     next(err);
 });
-
-
-// Course detail page with route parameter
-// app.get('/catalog/:courseId', (req, res) => {
-//     // Extract the course ID from the URL
-//     const courseId = req.params.courseId;
-
-//     // Look up the course in our data
-//     const course = courses[courseId];
-
-//     // Handle course not found
-//     if (!course) {
-//         const err = new Error(`Course ${courseId} not found`);
-//         err.status = 404;
-//         return next(err);
-//     }
-
-//     // Log the parameter for debugging
-//     console.log('Viewing course:', courseId);
-
-//     // Render the course detail template
-//     res.render('course-detail', {
-//         title: `${course.id} - ${course.title}`,
-//         course: course
-//     });
-// });
-
-// Enhanced course detail route with sorting
-
-
-// Global error handler
 
 app.use((err, req, res, next) => {
     // Prevent infinite loops, if a response has already been sent, do nothing
