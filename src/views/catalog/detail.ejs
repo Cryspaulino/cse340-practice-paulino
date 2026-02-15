@@ -1,11 +1,11 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
     <main>
         <div class="course-header">
             <h1>
-                <%= course.title %>
+                <%= course.name %>
             </h1>
             <p class="course-meta">
-                <%= course.id %> • <%= course.credits %> credits
+                <%= courseCode %> • <%= course.creditHours %> credits
             </p>
             <p class="course-description">
                 <%= course.description %>
@@ -17,13 +17,24 @@
                 <h2>Available Sections</h2>
                 <div class="sort-options">
                     <span>Sort by: </span>
-                    <a href="/catalog/<%= course.id %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
-                    <a href="/catalog/<%= course.id %>?sort=professor"
+                    <a href="/catalog/<%= courseCode %>" class="<%= currentSort === 'time' ? 'active' : '' %>">Time</a>
+                    <a href="/catalog/<%= courseCode %>?sort=professor"
                         class="<%= currentSort === 'professor' ? 'active' : '' %>">Professor</a>
-                    <a href="/catalog/<%= course.id %>?sort=room"
+                    <a href="/catalog/<%= courseCode %>?sort=room"
                         class="<%= currentSort === 'room' ? 'active' : '' %>">Room</a>
                 </div>
             </div>
+
+            <% if (currentSort) { %>
+                <div class="sort-message">
+                    <p>Currently sorted by: <%= currentSort %>
+                    </p>
+                </div>
+                <% } else { %>
+                    <div class="sort-message">
+                        <p>No sorting applied, using default sorting by time.</p>
+                    </div>
+                    <% } %>
 
             <div class="section-list">
                 <% course.sections.forEach(section=> { %>
@@ -39,20 +50,10 @@
                     <% }); %>
             </div>
 
-            <% if (???) { %>
-                <div class="sort-message">
-                    <p>Currently sorted by: <%= ??? %>
-                    </p>
-                </div>
-                <% } else { %>
-                    <div class="sort-message">
-                        <p>No sorting applied, using default sorting by time.</p>
-                    </div>
-                    <% } %>
         </div>
 
         <div class="navigation">
             <p><a href="/catalog">&larr; Back to Course Catalog</a></p>
         </div>
     </main>
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>
